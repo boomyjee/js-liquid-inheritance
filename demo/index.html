@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Js Liquid `Block` & `Extend`</title>
+        <meta charset="utf-8">
+        <script src="./liquid.js"></script>
+        <script src="../liquid-inheritance.js"></script>
+    </head>
+    <body>
+
+    <script id="layout" type="text/html">
+        {% block 'title' %} <h1>Layout</h1> {% endblock %}
+        {% block 'subTitle' %} <h3>Welcome to `{{ name }}` demo</h3> {% endblock %}
+    </script>   
+
+    <div id="demo_page">
+        {% extends "layout" %}
+        {% block 'title' %} <h2>Demo page</h2>  {% endblock %} 
+    </div>
+
+    <script>
+        Liquid.readTemplateFile = function(path) {return document.getElementById(path).innerHTML;}
+        var content = document.getElementById('demo_page');
+        var tpl = Liquid.parse(content.innerHTML)
+        content.innerHTML = tpl.render({name: 'liquid'});
+    </script>
+
+    </body>
+</html>
